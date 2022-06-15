@@ -9,7 +9,7 @@ const Home = () => {
     <div>
       <Header />
 
-      <Items />
+      <Items isProfile={false} />
       <Grid p={2} container justifyContent="center">
         <Pagination count={10} variant="outlined" shape="rounded" />
       </Grid>

@@ -13,14 +13,17 @@ import {
 } from "@mui/material";
 import { LocalMallRounded } from "@mui/icons-material";
 
-const ImageCard = () => {
+const ImageCard = ({ isProfile }) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        avatar={<Avatar aria-label="recipe">R</Avatar>}
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
-      />
+      {!isProfile ? (
+        <CardHeader
+          avatar={<Avatar aria-label="recipe">R</Avatar>}
+          title="Shrimp and Chorizo Paella"
+          subheader="September 14, 2016"
+        />
+      ) : null}
+
       <CardActionArea>
         <CardMedia
           component="img"
@@ -39,20 +42,18 @@ const ImageCard = () => {
       </CardActionArea>
       <CardActions>
         <Button
-         
+          variant="text"
+          sx={{ fontWeight: "bold", color: "black", fontSize: "16px" }}
+          color="primary"
+        >
+          Rs. 300
+        </Button>
+        <Button
           variant="contained"
           startIcon={<LocalMallRounded />}
           color="primary"
         >
           Buy Now
-        </Button>
-        <Button
-         
-          variant="outlined"
-          startIcon={<ShoppingCartIcon />}
-          color="primary"
-        >
-          Add to Cart
         </Button>
       </CardActions>
     </Card>

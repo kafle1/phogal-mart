@@ -68,6 +68,7 @@ export default function Header() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
+   
     setAnchorEl(event.currentTarget);
   };
 
@@ -76,6 +77,7 @@ export default function Header() {
   };
 
   const handleMenuClose = () => {
+    navigate("/profile");
     setAnchorEl(null);
     handleMobileMenuClose();
   };

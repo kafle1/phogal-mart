@@ -4,6 +4,8 @@ import Home from "./components/pages/Home";
 import AddImage from "./components/pages/AddImage";
 import Profile from "./components/pages/Profile";
 import MyAccount from "./components/pages/MyAccount";
+import Signin from "./components/pages/Signin";
+import Signup from "./components/pages/Signup";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path="/add-photograph" element={<AddImage />} />
         <Route path="/my-account" element={<MyAccount />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>

@@ -68,7 +68,6 @@ export default function Header() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
-   
     setAnchorEl(event.currentTarget);
   };
 
@@ -77,9 +76,16 @@ export default function Header() {
   };
 
   const handleMenuClose = () => {
-    navigate("/profile");
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+  const handleProfile = () => {
+    navigate("/profile");
+    handleMenuClose();
+  };
+  const handleMyAccount = () => {
+    navigate("/my-account");
+    handleMenuClose();
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -103,8 +109,8 @@ export default function Header() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleProfile}>Profile</MenuItem>
+      <MenuItem onClick={handleMyAccount}>My account</MenuItem>
     </Menu>
   );
 

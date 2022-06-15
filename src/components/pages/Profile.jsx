@@ -1,12 +1,4 @@
-import {
-  Avatar,
-  Grid,
-  Paper,
-  Stack,
-  Typography,
-  TextField,
-  Chip,
-} from "@mui/material";
+import { Avatar, Grid, Stack, Typography, Chip } from "@mui/material";
 import React from "react";
 import Footer from "../shared/Footer";
 import Header from "../shared/Header";
@@ -18,7 +10,7 @@ const Profile = () => {
     <div>
       <Header />
 
-      <Grid justifyContent="center" p={3} paddingTop={10}>
+      <Grid justifyContent="center" paddingTop={10}>
         <Stack textAlign="center" alignItems="center">
           <Avatar
             alt="Remy Sharp"

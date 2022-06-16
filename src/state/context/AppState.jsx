@@ -1,12 +1,25 @@
-import React from "react";
+import React, {useReducer} from "react";
+import { CHANGE_AUTH } from "../actions";
+import { authReducer } from "../reducer/authReducer";
 import AppContext from "./appContext";
 
-const state = {
-  data: "something",
-};
 const AppState = (props) => {
+  const initialState = {
+    isLoggedIn: false,
+  };
+
+  const [state, dispatch] = useReducer(authReducer, initialState);
+
+  //Dispatch methods
+  const changeAuth = () => {
+    dispatch({
+      type: CHANGE_AUTH,
+    });
+  };
+
+  
   return (
-    <AppContext.Provider value={{ state }}>
+    <AppContext.Provider value={{ isLoggedIn: state.isLoggedIn, changeAuth }}>
       {props.children}
     </AppContext.Provider>
   );

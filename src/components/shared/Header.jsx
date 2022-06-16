@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useContext } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -17,6 +17,9 @@ import StorefrontIcon from "@mui/icons-material/Storefront";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import { Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import AppContext from "../../state/context/appContext";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -58,8 +61,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Header({isLoggedIn}) {
+export default function Header() {
+  //Get the state
+  const { isLoggedIn, changeAuth } = useContext(AppContext);
+
+  //Configure navigation
   const navigate = useNavigate();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -78,6 +86,11 @@ export default function Header({isLoggedIn}) {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
   const handleProfile = () => {
     navigate("/profile");
     handleMenuClose();
@@ -86,9 +99,9 @@ export default function Header({isLoggedIn}) {
     navigate("/my-account");
     handleMenuClose();
   };
-
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
+  //Logout the user
+  const handleLogout = () => {
+    changeAuth();
   };
 
   const menuId = "primary-search-account-menu";
@@ -186,30 +199,52 @@ export default function Header({isLoggedIn}) {
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
+
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Tooltip title="Add new Image">
-              <IconButton
-                onClick={() => navigate("/add-photograph")}
-                size="large"
-                aria-label="show 4 new mails"
-                color="inherit"
-              >
-                <AddPhotoAlternateIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Profile">
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-            </Tooltip>
+            {isLoggedIn ? (
+              <div>
+                <Tooltip title="Add new Image">
+                  <IconButton
+                    onClick={() => navigate("/add-photograph")}
+                    size="large"
+                    color="inherit"
+                  >
+                    <AddPhotoAlternateIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Logout">
+                  <IconButton
+                    size="large"
+                    onClick={() => handleLogout()}
+                    color="inherit"
+                  >
+                    <LogoutIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Profile">
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                </Tooltip>
+              </div>
+            ) : (
+              <Tooltip title="Sign In">
+                <IconButton
+                  onClick={() => navigate("/signin")}
+                  size="large"
+                  color="inherit"
+                >
+                  <LoginIcon />
+                </IconButton>
+              </Tooltip>
+            )}
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton

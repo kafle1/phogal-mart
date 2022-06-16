@@ -1,11 +1,21 @@
 import { Avatar, Grid, Stack, Typography, Chip } from "@mui/material";
-import React from "react";
+import React, {useContext} from "react";
 import Footer from "../shared/Footer";
 import Header from "../shared/Header";
 import SellIcon from "@mui/icons-material/Sell";
 import Items from "../Items";
+import { useNavigate } from "react-router-dom";
+import AppContext from "../../state/context/appContext";
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const { isLoggedIn } = useContext(AppContext);
+
+  
+  //Redirect user to signin if not logged in
+  if (!isLoggedIn) {
+    navigate("/signin");
+  }
   return (
     <div>
       <Header />

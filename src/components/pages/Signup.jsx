@@ -9,11 +9,16 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 
 import Footer from "../shared/Footer";
 import Header from "../shared/Header";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Container } from "@mui/system";
 import PasswordIcon from "@mui/icons-material/Password";
+import { useNavigate } from "react-router-dom";
+import AppState from "../../state/context/AppState";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const { isLoggedIn, changeAuth } = useContext(AppState);
+
   const [credentials, setCredentials] = useState({
     name: "",
     address: "",
@@ -24,7 +29,13 @@ const Signup = () => {
   //Signup user
   const handleSignUp = () => {
     console.log(credentials);
+    changeAuth();
   };
+
+  if (isLoggedIn) {
+    navigate("/");
+  }
+
   return (
     <div>
       <Header />
@@ -113,6 +124,16 @@ const Signup = () => {
               ),
             }}
           />
+          <Typography variant="body2" color="initial">
+            Already have an account?{" "}
+            <Button
+              variant="text"
+              sx={{ fontWeight: "bold" }}
+              onClick={() => navigate("/signin")}
+            >
+              Signin
+            </Button>
+          </Typography>
           <Button
             size="large"
             variant="contained"

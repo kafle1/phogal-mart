@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Typography from "@mui/material/Typography";
 import Header from "../shared/Header";
 import Footer from "../shared/Footer";
@@ -8,8 +8,19 @@ import InputAdornment from "@mui/material/InputAdornment";
 import TitleIcon from "@mui/icons-material/Title";
 import DescriptionIcon from "@mui/icons-material/Description";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
+import { useNavigate } from "react-router-dom";
+import AppContext from "../../state/context/appContext";
 
 const AddImage = () => {
+  const navigate = useNavigate();
+  const { isLoggedIn } = useContext(AppContext);
+
+  
+  //Redirect user to signin if not logged in
+  if (!isLoggedIn) {
+    navigate("/signin");
+  }
+
   const [details, setDetails] = useState({
     title: "",
     description: "",
@@ -23,7 +34,7 @@ const AddImage = () => {
   };
   return (
     <div>
-      <Header />
+      <Header  />
       <Container>
         <Typography paddingTop={10} variant="h5" color="initial">
           Create a New Photograph

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Typography from "@mui/material/Typography";
 import Header from "../shared/Header";
 import Footer from "../shared/Footer";
@@ -19,8 +19,20 @@ import KeyIcon from "@mui/icons-material/Key";
 import BadgeIcon from "@mui/icons-material/Badge";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import HomeIcon from "@mui/icons-material/Home";
+import { useNavigate } from "react-router-dom";
+import AppContext from "../../state/context/appContext";
 
 const MyAccount = () => {
+  const navigate = useNavigate();
+  const { isLoggedIn } = useContext(AppContext);
+
+
+  //Redirect user to signin if not logged in
+  if (!isLoggedIn) {
+    navigate("/signin");
+  }
+
+
   const [details, setDetails] = useState({
     name: "Niraj Kafle",
     email: "kafleniraj@gmail.com",
@@ -28,8 +40,7 @@ const MyAccount = () => {
     bio: "Simple Photographer",
   });
 
-  //Update the details when changed
-
+  //Update the details
   const handleUpdate = () => {
     console.log(details);
   };
@@ -40,7 +51,7 @@ const MyAccount = () => {
   };
   return (
     <div>
-      <Header />
+      <Header  />
       <Grid justifyContent="center" paddingTop={10}>
         <Stack textAlign="center" alignItems="center">
           <Avatar

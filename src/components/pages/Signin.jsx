@@ -1,6 +1,5 @@
 import {
   Button,
-  Grid,
   InputAdornment,
   Stack,
   TextField,
@@ -10,20 +9,32 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 
 import Footer from "../shared/Footer";
 import Header from "../shared/Header";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Container } from "@mui/system";
 import PasswordIcon from "@mui/icons-material/Password";
+import { useNavigate } from "react-router-dom";
+import AppContext from "../../state/context/appContext";
 
 const Signin = () => {
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
 
+  const { isLoggedIn, changeAuth } = useContext(AppContext);
+
+  console.log(isLoggedIn);
+
+  
   //Signin the user
   const handleSignIn = () => {
     console.log(credentials);
+    changeAuth();
   };
+  if (isLoggedIn) {
+    navigate("/");
+  }
   return (
     <div>
       <Header />
@@ -47,7 +58,6 @@ const Signin = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  {" "}
                   <AlternateEmailIcon />
                 </InputAdornment>
               ),
@@ -69,12 +79,23 @@ const Signin = () => {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  {" "}
                   <PasswordIcon />
                 </InputAdornment>
               ),
             }}
           />
+
+          <Typography variant="body2" color="initial">
+            Do not have an account?
+            <Button
+              variant="text"
+              sx={{ fontWeight: "bold" }}
+              onClick={() => navigate("/signup")}
+            >
+              Signup
+            </Button>
+          </Typography>
+
           <Button
             size="large"
             variant="contained"

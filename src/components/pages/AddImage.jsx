@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Header from "../shared/Header";
 import Footer from "../shared/Footer";
@@ -15,7 +15,12 @@ const AddImage = () => {
   const navigate = useNavigate();
   const { isLoggedIn } = useContext(AppContext);
 
-  
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/signin");
+    }
+  }, []);
+
   //Redirect user to signin if not logged in
   if (!isLoggedIn) {
     navigate("/signin");
@@ -34,7 +39,7 @@ const AddImage = () => {
   };
   return (
     <div>
-      <Header  />
+      <Header />
       <Container>
         <Typography paddingTop={10} variant="h5" color="initial">
           Create a New Photograph

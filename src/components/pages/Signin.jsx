@@ -1,6 +1,8 @@
 import {
+  Alert,
   Button,
   InputAdornment,
+  Snackbar,
   Stack,
   TextField,
   Typography,
@@ -9,11 +11,12 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 
 import Footer from "../shared/Footer";
 import Header from "../shared/Header";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Container } from "@mui/system";
 import PasswordIcon from "@mui/icons-material/Password";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../../state/context/appContext";
+import { Account } from "../../appwrite/account.appwrite";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -21,22 +24,57 @@ const Signin = () => {
     email: "",
     password: "",
   });
+  const [alert, setAlert] = useState({
+    isOpen: false,
+    type: "success",
+    message: "Alert",
+  });
 
   const { isLoggedIn, changeAuth } = useContext(AppContext);
 
-  console.log(isLoggedIn);
-
-  
-  //Signin the user
-  const handleSignIn = () => {
-    console.log(credentials);
-    changeAuth();
-  };
   if (isLoggedIn) {
     navigate("/");
   }
+
+  //Signin the user
+  const handleSignIn = async () => {
+    const res = await Account.signin(credentials);
+    if (res.data) {
+      setAlert({
+        isOpen: true,
+        type: "success",
+        message: "Logged in successfully",
+      });
+      setTimeout(() => {
+        navigate("/");
+        changeAuth();
+      }, 2000);
+    } else {
+      setAlert({
+        isOpen: true,
+        type: "error",
+        message: res.error.message,
+      });
+    }
+  };
+
   return (
     <div>
+      <Snackbar
+        open={alert.isOpen}
+        autoHideDuration={6000}
+        onClose={() => setAlert({ ...alert, isOpen: false })}
+      >
+        <Alert
+          variant="filled"
+          severity={alert.type}
+          sx={{ width: "100%" }}
+          onClose={() => setAlert({ ...alert, isOpen: false })}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
+
       <Header />
       <Container>
         <Stack paddingTop={10} spacing={3}>
@@ -68,7 +106,6 @@ const Signin = () => {
             label="Password"
             placeholder="Enter Password"
             onChange={(e) => {
-              console.log(e.target.value);
               setCredentials({
                 ...credentials,
                 password: e.target.value,

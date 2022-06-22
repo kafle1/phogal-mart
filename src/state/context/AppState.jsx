@@ -1,11 +1,14 @@
-import React, {useReducer} from "react";
+import React, { useReducer } from "react";
+import { Account } from "../../appwrite/account.appwrite";
 import { CHANGE_AUTH } from "../actions";
 import { authReducer } from "../reducer/authReducer";
 import AppContext from "./appContext";
 
 const AppState = (props) => {
+  
+  
   const initialState = {
-    isLoggedIn: false,
+    isLoggedIn: Account.isLoggedIn(),
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -17,7 +20,6 @@ const AppState = (props) => {
     });
   };
 
-  
   return (
     <AppContext.Provider value={{ isLoggedIn: state.isLoggedIn, changeAuth }}>
       {props.children}

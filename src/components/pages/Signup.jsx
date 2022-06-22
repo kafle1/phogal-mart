@@ -1,6 +1,8 @@
 import {
+  Alert,
   Button,
   InputAdornment,
+  Snackbar,
   Stack,
   TextField,
   Typography,
@@ -13,11 +15,12 @@ import React, { useState, useContext } from "react";
 import { Container } from "@mui/system";
 import PasswordIcon from "@mui/icons-material/Password";
 import { useNavigate } from "react-router-dom";
-import AppState from "../../state/context/AppState";
+import AppContext from "../../state/context/appContext";
+import { Account } from "../../appwrite/account.appwrite";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const { isLoggedIn, changeAuth } = useContext(AppState);
+  const { isLoggedIn, changeAuth } = useContext(AppContext);
 
   const [credentials, setCredentials] = useState({
     name: "",
@@ -26,10 +29,35 @@ const Signup = () => {
     password: "",
   });
 
+  const [alert, setAlert] = useState({
+    isOpen: false,
+    type: "success",
+    message: "Alert",
+  });
+
   //Signup user
-  const handleSignUp = () => {
-    console.log(credentials);
-    changeAuth();
+  const handleSignUp = async () => {
+    const res = await Account.signup(credentials);
+
+    if (res.data) {
+      console.log(res.data);
+      setAlert({
+        isOpen: true,
+        type: "success",
+        message: "Account created successfully",
+      });
+      setTimeout(() => {
+        changeAuth();
+        navigate("/");
+      }, 2000);
+    } else {
+      console.log(res.error);
+      setAlert({
+        isOpen: true,
+        type: "error",
+        message: res.error.message,
+      });
+    }
   };
 
   if (isLoggedIn) {
@@ -38,6 +66,21 @@ const Signup = () => {
 
   return (
     <div>
+      <Snackbar
+        open={alert.isOpen}
+        autoHideDuration={6000}
+        onClose={() => setAlert({ ...alert, isOpen: false })}
+      >
+        <Alert
+          variant="filled"
+          severity={alert.type}
+          sx={{ width: "100%" }}
+          onClose={() => setAlert({ ...alert, isOpen: false })}
+        >
+          {alert.message}
+        </Alert>
+      </Snackbar>
+
       <Header />
       <Container>
         <Stack paddingTop={10} spacing={3}>

@@ -3,7 +3,6 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
   Avatar,
   Button,
@@ -14,6 +13,7 @@ import {
 import { LocalMallRounded } from "@mui/icons-material";
 
 const ImageCard = ({ isProfile }) => {
+  
   return (
     <Card sx={{ maxWidth: 345 }}>
       {!isProfile ? (

@@ -12,12 +12,13 @@ export const Account = {
       );
       //Create session for the user and store in localstorage
       const userSession = await ACCOUNT.createSession(email, password);
+      localStorage.setItem("uid", userSession.userId);
 
       //Create new user in db
       const userData = await DATABASE.createDocument(
         import.meta.env.VITE_USERS_COLLECTION_ID,
-        "unique()",
-        { uid: userAccount.$id, address }
+        userAccount.$id,
+        { address }
       );
 
       // Create a new bucket for the user
@@ -38,6 +39,7 @@ export const Account = {
     try {
       //Create session for the user and store in localstorage
       const userSession = await ACCOUNT.createSession(email, password);
+      localStorage.setItem("uid", userSession.userId);
 
       return { message: "Success", data: { userSession } };
     } catch (error) {
@@ -56,6 +58,7 @@ export const Account = {
     try {
       //Delete the current user's session and remove session form localstorage
       const data = await ACCOUNT.deleteSession("current");
+      localStorage.removeItem("uid");
       return { message: "Success", data };
     } catch (error) {
       return { message: "Failure", error };

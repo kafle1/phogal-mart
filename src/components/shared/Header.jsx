@@ -63,9 +63,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Header() {
-  //Get the state
+  
   const { isLoggedIn, changeAuth } = useContext(AppContext);
-// console.log(isLoggedIn);
+
   //Configure navigation
   const navigate = useNavigate();
 
@@ -145,7 +145,7 @@ export default function Header() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+      <MenuItem onClick={()=> navigate('/add-photograph')}>
         <IconButton size="large" color="inherit">
           <Badge color="error">
             <MailIcon />

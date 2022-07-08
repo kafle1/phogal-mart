@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <div>
       <Typography p={2} align="center" variant="body2" color="initial">
-        Made with love by Niraj ❤️
+        Made with ❤️ by Niraj 
       </Typography>
     </div>
   );

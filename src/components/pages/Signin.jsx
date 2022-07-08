@@ -38,17 +38,17 @@ const Signin = () => {
 
   //Signin the user
   const handleSignIn = async () => {
-    const res = await Account.signin(credentials);
+    let res = await Account.signin(credentials);
     if (res.data) {
       setAlert({
         isOpen: true,
         type: "success",
-        message: "Logged in successfully",
+        message: "Logged in successfully!!",
       });
       setTimeout(() => {
         navigate("/");
         changeAuth();
-      }, 2000);
+      }, 1000);
     } else {
       setAlert({
         isOpen: true,

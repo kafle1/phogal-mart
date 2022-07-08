@@ -49,7 +49,7 @@ const Signup = () => {
       setTimeout(() => {
         changeAuth();
         navigate("/");
-      }, 2000);
+      }, 1000);
     } else {
       console.log(res.error);
       setAlert({

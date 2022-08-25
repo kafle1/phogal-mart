@@ -27,10 +27,7 @@ const MyAccount = () => {
   const { isLoggedIn } = useContext(AppContext);
 
 
-  //Redirect user to signin if not logged in
-  if (!isLoggedIn) {
-    navigate("/signin");
-  }
+ 
 
 
   const [details, setDetails] = useState({

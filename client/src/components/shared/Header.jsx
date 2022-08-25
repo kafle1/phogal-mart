@@ -20,7 +20,6 @@ import { useNavigate } from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AppContext from "../../state/context/appContext";
-import { Account } from "../../appwrite/account.appwrite";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -102,8 +101,8 @@ export default function Header() {
   };
   //Logout the user
   const handleLogout = async () => {
-    await Account.logout();
-    window.location.reload();
+   
+    
   };
 
   const menuId = "primary-search-account-menu";

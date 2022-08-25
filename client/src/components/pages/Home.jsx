@@ -10,10 +10,7 @@ const Home = () => {
   const navigate = useNavigate();
   const { isLoggedIn } = useContext(AppContext);
 
-  //Redirect user to signin if not logged in
-  if (!isLoggedIn) {
-   navigate("/signin");
-  }
+ 
   return (
     <div>
       <Header  />

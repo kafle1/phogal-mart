@@ -17,7 +17,6 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../../state/context/appContext";
-import { Database } from "../../appwrite/database.appwrite";
 
 const AddImage = () => {
   const navigate = useNavigate();
@@ -35,10 +34,7 @@ const AddImage = () => {
     message: "Alert",
   });
 
-  //Redirect user to signin if not logged in
-  if (!isLoggedIn) {
-    navigate("/signin");
-  }
+
 
   const [details, setDetails] = useState({
     title: "",
@@ -49,24 +45,7 @@ const AddImage = () => {
 
   //Add photograph
   const handleUpload = async () => {
-    let res = await Database.addNewPhotograph(details);
-    if (res.data) {
-      setAlert({
-        isOpen: true,
-        type: "success",
-        message: "Photograph listed successfully!!",
-      });
-      setTimeout(() => {
-
-        navigate("/profile");
-      }, 1000);
-    } else {
-      setAlert({
-        isOpen: true,
-        type: "error",
-        message: res.error.message,
-      });
-    }
+   
   };
   return (
     <div>

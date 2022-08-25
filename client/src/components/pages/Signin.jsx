@@ -11,58 +11,29 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 
 import Footer from "../shared/Footer";
 import Header from "../shared/Header";
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Container } from "@mui/system";
 import PasswordIcon from "@mui/icons-material/Password";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../../state/context/appContext";
-import { Account } from "../../appwrite/account.appwrite";
 
-const Signup = () => {
+const Signin = () => {
   const navigate = useNavigate();
   const { isLoggedIn, changeAuth } = useContext(AppContext);
-
+  
   const [credentials, setCredentials] = useState({
-    name: "",
-    address: "",
     email: "",
     password: "",
   });
-
   const [alert, setAlert] = useState({
     isOpen: false,
     type: "success",
     message: "Alert",
   });
 
-  //Signup user
-  const handleSignUp = async () => {
-    const res = await Account.signup(credentials);
 
-    if (res.data) {
-      console.log(res.data);
-      setAlert({
-        isOpen: true,
-        type: "success",
-        message: "Account created successfully",
-      });
-      setTimeout(() => {
-        changeAuth();
-        navigate("/");
-      }, 1000);
-    } else {
-      console.log(res.error);
-      setAlert({
-        isOpen: true,
-        type: "error",
-        message: res.error.message,
-      });
-    }
-  };
-
-  if (isLoggedIn) {
-    navigate("/");
-  }
+  //Signin the user
+  const handleSignIn = async () => {};
 
   return (
     <div>
@@ -85,48 +56,8 @@ const Signup = () => {
       <Container>
         <Stack paddingTop={10} spacing={3}>
           <Typography variant="h5" color="initial">
-            Sign Up
+            Signin
           </Typography>
-          <TextField
-            id="name"
-            label="Name"
-            onChange={(e) => {
-              setCredentials({
-                ...credentials,
-                name: e.target.value,
-              });
-            }}
-            placeholder="Enter Name"
-            type="text"
-            value={credentials.name}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AlternateEmailIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            id="address"
-            label="Address"
-            onChange={(e) => {
-              setCredentials({
-                ...credentials,
-                address: e.target.value,
-              });
-            }}
-            placeholder="Enter Your Address"
-            type="text"
-            value={credentials.address}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <AlternateEmailIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
           <TextField
             id="email"
             label="Email"
@@ -167,23 +98,25 @@ const Signup = () => {
               ),
             }}
           />
+
           <Typography variant="body2" color="initial">
-            Already have an account?{" "}
+            Do not have an account?
             <Button
               variant="text"
               sx={{ fontWeight: "bold" }}
-              onClick={() => navigate("/signin")}
+              onClick={() => navigate("/signup")}
             >
-              Signin
+              Signup
             </Button>
           </Typography>
+
           <Button
             size="large"
             variant="contained"
             color="primary"
-            onClick={() => handleSignUp()}
+            onClick={() => handleSignIn()}
           >
-            Sign Up
+            Sign In
           </Button>
         </Stack>
       </Container>
@@ -193,4 +126,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Signin;

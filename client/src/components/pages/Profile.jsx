@@ -6,7 +6,6 @@ import SellIcon from "@mui/icons-material/Sell";
 import Items from "../Items";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../../state/context/appContext";
-import { Database } from "../../appwrite/database.appwrite";
 
 const Profile = () => {
   const navigate = useNavigate();

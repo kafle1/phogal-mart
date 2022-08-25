@@ -5,7 +5,6 @@ const appwrite = new Appwrite();
 appwrite
   .setEndpoint(import.meta.env.VITE_API_ENDPOINT)
   .setProject(import.meta.env.VITE_PROJECT_ID)
-  .setLocale("en");
 
 export const DATABASE = appwrite.database;
 export const STORAGE = appwrite.storage;
